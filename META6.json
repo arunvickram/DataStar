@@ -6,6 +6,7 @@
   "build-depends": [
   ],
   "depends": [
+    "JSON::Fast::Hyper"
   ],
   "description": "blah blah blah",
   "license": "Artistic-2.0",
