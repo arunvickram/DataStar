@@ -1,0 +1,29 @@
+=begin pod
+
+=head1 NAME
+
+B<DataStar> - blah blah blah
+
+=head1 SYNOPSIS
+
+=begin code :lang<raku>
+
+use DataStar;
+
+=end code
+
+=head1 DESCRIPTION
+
+B<DataStar> is ...
+
+=head1 AUTHOR
+
+ <>
+
+=head1 COPYRIGHT AND LICENSE
+
+© 2025 
+
+This library is free software; you may redistribute it or modify it under the Artistic License 2.0.
+
+=end pod
