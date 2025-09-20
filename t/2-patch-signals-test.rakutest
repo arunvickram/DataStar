@@ -1,0 +1,6 @@
+use Test;
+use DataStar;
+
+is 'hello', 'hello';
+
+done-testing;
