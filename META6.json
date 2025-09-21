@@ -8,8 +8,8 @@
   "depends": [
     "JSON::Fast::Hyper"
   ],
-  "description": "blah blah blah",
-  "license": "Artistic-2.0",
+  "description": "A Raku SDK for the data-star hypermedia framework",
+  "license": "Hippocratic",
   "name": "DataStar",
   "perl": "6.d",
   "provides": {
@@ -17,10 +17,10 @@
   },
   "resources": [
   ],
-  "source-url": "",
+  "source-url": "https://github.com/arunvickram/DataStar.git",
   "tags": [
   ],
   "test-depends": [
   ],
-  "version": "0.0.1"
+  "version": "0.0.2"
 }

@@ -1,3 +1,5 @@
+[![Actions Status](https://github.com/arunvickram/DataStar/actions/workflows/linux.yml/badge.svg)](https://github.com/arunvickram/DataStar/actions) [![Actions Status](https://github.com/arunvickram/DataStar/actions/workflows/macos.yml/badge.svg)](https://github.com/arunvickram/DataStar/actions) [![Actions Status](https://github.com/arunvickram/DataStar/actions/workflows/windows.yml/badge.svg)](https://github.com/arunvickram/DataStar/actions)
+
 NAME
 ====
 
@@ -29,18 +31,15 @@ sub routes() is export {
 DESCRIPTION
 ===========
 
-**DataStar** is an Raku-language SDK for [data-star](https://data-star.dev/), the reactive hypermedia framework that uses
-signals and server-sent events to integrate hypermedia applications with reactivity.
+**DataStar** is an Raku-language SDK for [data-star](https://data-star.dev/), the reactive hypermedia framework that uses signals and server-sent events to integrate hypermedia applications with reactivity.
 
 AUTHOR
 ======
 
-arunvickram [arunvickram@proton.me](mailto:arunvickram@proton.me)
+    Arun Vickram L<arunvickram@proton.me|mailto:arunvickram@proton.me>
 
 COPYRIGHT AND LICENSE
 =====================
 
 © 2025 Arun Vickram
-
-[![Hippocratic License HL3-BDS-BOD-ECO-EXTR-FFD-LAW-MEDIA-MIL-MY-SOC-SV-USTA-XUAR](https://img.shields.io/static/v1?label=Hippocratic%20License&message=HL3-BDS-BOD-ECO-EXTR-FFD-LAW-MEDIA-MIL-MY-SOC-SV-USTA-XUAR&labelColor=5e2751&color=bc8c3d)](https://firstdonoharm.dev/version/3/0/bds-bod-eco-extr-ffd-law-media-mil-my-soc-sv-usta-xuar.html)
 
