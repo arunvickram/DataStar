@@ -1,15 +1,15 @@
 {
   "auth": "zef:arunvickram",
   "authors": [
-    ""
+    "Arun Vickram"
   ],
   "build-depends": [
   ],
   "depends": [
     "JSON::Fast::Hyper"
   ],
-  "description": "A Raku SDK for the data-star hypermedia framework",
-  "license": "Hippocratic",
+  "description": "A Raku SDK for the data-star hyper media framework",
+  "license": "Artistic-2.0",
   "name": "DataStar",
   "perl": "6.d",
   "provides": {
@@ -19,8 +19,9 @@
   ],
   "source-url": "https://github.com/arunvickram/DataStar.git",
   "tags": [
+    ""
   ],
   "test-depends": [
   ],
-  "version": "0.0.2"
+  "version": "0.0.4"
 }

@@ -2,5 +2,8 @@ Revision history for DataStar
 
 {{$NEXT}}
 
+0.0.4  2025-09-21T16:18:49-04:00
+    - Changed license in META6.json from Hippocratic to Artistic-2.0
+
 0.0.2  2025-09-20T20:05:51-04:00
     - Initial version
