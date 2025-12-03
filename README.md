@@ -26,6 +26,23 @@ sub routes() is export {
         }
     }
 }
+
+# in some other Cro application (with the new API)
+sub routes() is export {
+    route {
+        post -> 'validate' { 
+            content 'text/event-stream', datastar {
+                patch-elements '<div>Hello there</div>', 
+                    selector => '.validation',
+                    mode => PatchMode::AFTER;
+
+                my %new-signals = test => 2;
+
+                patch-signals %signals; 
+            }
+        }
+    }
+}
 ```
 
 DESCRIPTION
