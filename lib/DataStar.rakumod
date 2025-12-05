@@ -19,7 +19,7 @@ multi read-signals(Str $method!, % (:Datastar-Request($), Str :$Content-Type! wh
 }
 multi read-signals($, %, %, $) { Nil }
 
-sub js-bool(Bool:D $raku-bool) { lc ~$raku-bool }
+sub js-bool(Bool $raku-bool) { lc ~?$raku-bool }
 
 sub escape($s) {
     $s.subst('&', '&amp').subst("'", '&#39;').subst('"', '&#34;').subst(">", '&gt;').subst("<", '&lt;')
@@ -112,7 +112,7 @@ sub remove-elements(Str $selector, Str :$event-id, Int :$retry-duration) is expo
 multi execute-script(Str $script, Bool :$auto-remove, Positional :$attributes, Str :$event-id, Int :$retry-duration) is export {
     my @attrs;
 
-    @attrs.push('data-effects="el.remove()') if $auto-remove;
+    @attrs.push('data-effect="el.remove()"') if $auto-remove;
     @attrs = |@attrs, |$attributes with $attributes;
 
     my $attrs-str = @attrs.join(" ");
