@@ -10,7 +10,7 @@ B<DataStar> - the real-time hypermedia framework, Rakufied.
 
 use DataStar;
 
-# in some other Cro application (with the new API)
+# in your Cro application
 sub routes() is export {
     route {
         post -> 'validate' { 

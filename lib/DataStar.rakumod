@@ -71,14 +71,14 @@ multi patch-elements(Str $elements, Str :$selector, ElementPatchMode :$mode, Boo
     my @data-lines;
 
     with $mode {
-        @data-lines.push("{MODE-DATALINE-LITERAL}: {.value}") unless $_ == ElementPatchMode::OUTER;
+        @data-lines.push("{MODE-DATALINE-LITERAL} {.value}") unless $_ == ElementPatchMode::OUTER;
     }
 
-    @data-lines.push("{SELECTOR-DATALINE-LITERAL}: $_") with $selector;
-    @data-lines.push("{USE-VIEW-TRANSITION-DATALINE-LITERAL}: {js-bool($use-view-transition)}") if $use-view-transition;
+    @data-lines.push("{SELECTOR-DATALINE-LITERAL} $_") with $selector;
+    @data-lines.push("{USE-VIEW-TRANSITION-DATALINE-LITERAL} {js-bool($use-view-transition)}") if $use-view-transition;
 
     with $elements {
-        my @element-lines = "{ELEMENTS-DATALINE-LITERAL}: " X~ $_.split("\n");
+        my @element-lines = "{ELEMENTS-DATALINE-LITERAL} " X~ $_.split("\n");
         @data-lines = |@data-lines, |@element-lines;
     }
 
@@ -92,10 +92,10 @@ multi patch-signals(Str $signals, Str :$event-id, Bool :$only-if-missing, Int :$
     my @data-lines;
 
     if $only-if-missing {
-        @data-lines.push("{ONLY-IF-MISSING-DATALINE-LITERAL}: {js-bool($only-if-missing)}");
+        @data-lines.push("{ONLY-IF-MISSING-DATALINE-LITERAL} {js-bool($only-if-missing)}");
     }
 
-    my @signal-lines = "{SIGNALS-DATALINE-LITERAL}: " X~ $signals.split("\n");
+    my @signal-lines = "{SIGNALS-DATALINE-LITERAL} " X~ $signals.split("\n");
     @data-lines = |@data-lines, |@signal-lines;
 
     $*response-generator.send: EventType::PatchSignals, @data-lines, :$event-id, :$retry-duration;
@@ -110,12 +110,14 @@ sub remove-elements(Str $selector, Str :$event-id, Int :$retry-duration) is expo
 }
 
 multi execute-script(Str $script, Bool :$auto-remove, Positional :$attributes, Str :$event-id, Int :$retry-duration) is export {
-    my $attr-str = "";
+    my @attrs;
 
-    $attr-str ~= 'data-effect="el.remove()"' if $auto-remove;
-    $attr-str ~= ' ' ~ $attributes.join(' ') if $attributes;
+    @attrs.push('data-effects="el.remove()') if $auto-remove;
+    @attrs = |@attrs, |$attributes with $attributes;
 
-    my $script-tag = "<script $attr-str>" ~ $script ~ "</script>";
+    my $attrs-str = @attrs.join(" ");
+
+    my $script-tag = "<script $attrs-str>" ~ $script ~ "</script>";
 
     patch-elements $script-tag, :selector<body>, :mode(ElementPatchMode::APPEND), :$event-id, :$retry-duration
 }
@@ -124,97 +126,3 @@ multi execute-script(Str $script, Bool :$auto-remove, Associative :$attributes, 
     my @attributes = [ "{escape(.key)}=\"{escape(.value)}\"" for $attributes.pairs ];
     samewith $script, :$auto-remove, :@attributes, :$event-id, :$retry-duration
 }
-
-#class ServerSentEventGenerator is export {
-#    method send(EventType:D $event-type, @data-lines, Str :$event-id, Int :$retry-duration) {
-#        my @prefix = ["event: {$event-type.value}"];
-#
-#        @prefix.push("id: $_") with $event-id;
-#
-#        with $retry-duration {
-#            @prefix.push("retry: $_") unless $_ == DEFAULT-SSE-RETRY-DURATION;
-#        }
-#
-#        my @data = "data: " X~ @data-lines;
-#
-#        [ |@prefix, |@data ].join("\n") ~ ("\n" x 2)
-#    }
-#
-#    method send-supply(EventType:D $event-type, @data-lines, Str :$event-id, Int :$retry-duration) {
-#        supply {
-#            emit("event: {$event-type.value}\n");
-#            emit("id: $_\n") with $event-id;
-#
-#            with $retry-duration {
-#                emit("retry: $_\n") unless $_ == DEFAULT-SSE-RETRY-DURATION;
-#            }
-#
-#            emit("data: $_\n") for @data-lines;
-#            emit("\n" x 2)
-#        }
-#    }
-#
-#    method patch-elements(Str $elements, Str :$selector, ElementPatchMode :$mode, Bool :$use-view-transition, Str :$event-id, Int :$retry-duration, Bool :$as-supply) {
-#        my @data-lines;
-#
-#        with $mode {
-#            @data-lines.push("{MODE-DATALINE-LITERAL}: {.value}") unless $_ == ElementPatchMode::OUTER;
-#        }
-#
-#        @data-lines.push("{SELECTOR-DATALINE-LITERAL}: $_") with $selector;
-#
-#        @data-lines.push("{USE-VIEW-TRANSITION-DATALINE-LITERAL}: {js-bool($use-view-transition)}") if $use-view-transition;
-#
-#        with $elements {
-#            my @element-lines = "{ELEMENTS-DATALINE-LITERAL}: " X~ $_.split("\n");
-#            @data-lines = |@data-lines, |@element-lines;
-#        }
-#
-#        if $as-supply {
-#            self.send-supply: EventType::PatchElements, @data-lines, :$event-id, :$retry-duration
-#        } else {
-#            self.send: EventType::PatchElements, @data-lines, :$event-id, :$retry-duration
-#        }
-#    }
-#
-#    multi method patch-signals(Str $signals, Str :$event-id, Bool :$only-if-missing, Int :$retry-duration, Bool :$as-supply) {
-#        my @data-lines;
-#
-#        if $only-if-missing {
-#            @data-lines.push("{ONLY-IF-MISSING-DATALINE-LITERAL}: {js-bool($only-if-missing)}");
-#        }
-#
-#        my @signal-lines = "{SIGNALS-DATALINE-LITERAL}: " X~ $signals.split("\n");
-#        @data-lines = |@data-lines, |@signal-lines;
-#
-#        if $as-supply {
-#            self.send-supply(EventType::PatchSignals, @data-lines, :$event-id, :$retry-duration)
-#        } else {
-#            self.send(EventType::PatchSignals, @data-lines, :$event-id, :$retry-duration)
-#        }
-#    }
-#
-#    multi method patch-signals(%signals, Str :$event-id, Bool :$only-if-missing, Int :$retry-duration, Bool :$as-supply) {
-#        self.patch-signals(to-json(%signals), :$event-id, :$only-if-missing, :$retry-duration, :$as-supply)
-#    }
-#
-#    multi method remove-elements(Str $selector, Str :$event-id, Int :$retry-duration, Bool :$as-supply) {
-#        self.patch-elements(Str, :$selector, :mode(ElementPatchMode::REMOVE), :$event-id, :$retry-duration, :$as-supply)
-#    }
-#
-#    multi method execute-script(Str $script, Bool :$auto-remove, Positional :$attributes, Str :$event-id, Int :$retry-duration, Bool :$as-supply) {
-#        my $attr-str = "";
-#
-#        $attr-str ~= ' data-effect="el.remove()"' if $auto-remove;
-#        $attr-str ~= $attributes.join(" ") if $attributes;
-#
-#        my $script-tag = "<script $attr-str>" ~ $script ~ "</script>";
-#
-#        self.patch-elements($script-tag, :selector<body>, :mode(ElementPatchMode::APPEND), :$event-id, :$retry-duration, :$as-supply)
-#    }
-#
-#    multi method execute-script(Str $script, Bool :$auto-remove, Associative :$attributes, Str :$event-id, Int :$retry-duration, Bool :$as-supply) {
-#        my @attributes = [ "{escape(.key)}=\"{escape(.value)}\"" for $attributes.pairs ];
-#        samewith($script, :$auto-remove, :@attributes, :$event-id, :$retry-duration, :$as-supply)
-#    }
-#}

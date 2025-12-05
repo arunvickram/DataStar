@@ -3,7 +3,8 @@
   "authors": [
     "Arun Vickram"
   ],
-  "build-depends": [],
+  "build-depends": [
+  ],
   "depends": [
     "JSON::Fast::Hyper"
   ],
@@ -11,14 +12,16 @@
   "license": "Artistic-2.0",
   "name": "DataStar",
   "provides": {
-    "DataStar::Constants": "lib/DataStar/Constants.rakumod",
-    "DataStar": "lib/DataStar.rakumod"
+    "DataStar": "lib/DataStar.rakumod",
+    "DataStar::Constants": "lib/DataStar/Constants.rakumod"
   },
-  "resources": [],
+  "resources": [
+  ],
   "source-url": "https://github.com/arunvickram/DataStar.git",
   "tags": [
     ""
   ],
-  "test-depends": [],
+  "test-depends": [
+  ],
   "version": "0.0.4"
 }
