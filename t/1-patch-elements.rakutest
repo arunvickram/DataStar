@@ -1,0 +1,20 @@
+use Test;
+use DataStar;
+use DataStar::Constants;
+
+#lives-ok { datastar { patch-elements '<div></div>' } };
+#
+#like $test, /elements: /, 'failed elements';
+
+my $basic-patched-elements = datastar {
+    patch-elements 
+        "<div></div>", 
+        selector => '#id',
+        use-view-transition => True;
+};
+
+like $basic-patched-elements, /data: /, "SSE response should contain data:";
+like $basic-patched-elements, /elements /, "SSE response should contain elements:";
+like $basic-patched-elements, /selector /, "SSE response should contain selector:";
+
+done-testing;

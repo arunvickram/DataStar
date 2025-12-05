@@ -1,7 +1,0 @@
-use Test;
-use DataStar;
-
-like patch-elements("<div></div>", :selector<hello>), /data: /;
-like patch-elements("<div></div>", :selector<hello>), /elements: /;
-
-done-testing;

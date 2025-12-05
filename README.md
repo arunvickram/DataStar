@@ -11,18 +11,19 @@ SYNOPSIS
 ```raku
 use DataStar;
 
-# in some Cro application
+# in your Cro application
 sub routes() is export {
     route {
-        post -> 'validate' {
-            my $response = patch-elements(
-                "<div>Hello there</div>",
-                :as-supply,
-                :selector<.validation>,
-                :mode(PatchMode::AFTER)
-            );
+        post -> 'validate' { 
+            content 'text/event-stream', datastar {
+                patch-elements '<div>Hello there</div>', 
+                    selector => '.validation',
+                    mode => PatchMode::AFTER;
 
-            content 'text/event-stream', $response;
+                my %new-signals = test => 2;
+
+                patch-signals %signals; 
+            }
         }
     }
 }

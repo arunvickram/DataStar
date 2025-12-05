@@ -11,9 +11,9 @@
   "description": "A Raku SDK for the data-star hyper media framework",
   "license": "Artistic-2.0",
   "name": "DataStar",
-  "perl": "6.d",
   "provides": {
-    "DataStar": "lib/DataStar.rakumod"
+    "DataStar": "lib/DataStar.rakumod",
+    "DataStar::Constants": "lib/DataStar/Constants.rakumod"
   },
   "resources": [
   ],

@@ -1,6 +1,8 @@
 Revision history for DataStar
 
 {{$NEXT}}
+    - Created datastar{} block and set that as the default
+    - Fixed the functions to remove ':' for sub-events.
 
 0.0.4  2025-09-21T16:18:49-04:00
     - Changed license in META6.json from Hippocratic to Artistic-2.0

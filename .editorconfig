@@ -1,0 +1,2 @@
+[*.{rakumod,raku,rakutest}]
+indent_size = 4
