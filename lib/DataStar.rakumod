@@ -110,12 +110,12 @@ sub remove-elements(Str $selector, Str :$event-id, Int :$retry-duration) is expo
 }
 
 multi execute-script(Str $script, Bool :$auto-remove, Positional :$attributes, Str :$event-id, Int :$retry-duration) is export {
-    my @attrs;
+    my @attrs = [
+        'data-effect="el.remove()"' if $auto-remove;
+        |$attributes if $attributes
+    ];
 
-    @attrs.push('data-effect="el.remove()"') if $auto-remove;
-    @attrs = |@attrs, |$attributes with $attributes;
-
-    my $attrs-str = @attrs.join(" ");
+    my $attrs-str = @attrs.join(' ');
 
     my $script-tag = "<script $attrs-str>" ~ $script ~ "</script>";
 

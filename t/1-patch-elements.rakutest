@@ -14,10 +14,7 @@ my $basic-patched-elements = datastar {
 };
 
 like $basic-patched-elements, /data: /, "SSE response should contain data:";
-like $basic-patched-elements, /elements: /, "SSE response should contain elements:";
-like $basic-patched-elements, /selector: /, "SSE response should contain selector:";
-
-#like ServerSentEventGenerator.patch-elements("<div></div>", :selector<hello>), /data: /, "failed data";
-#like ServerSentEventGenerator.patch-elements("<div></div>", :selector<hello>), /elements: /, "failed elements";
+like $basic-patched-elements, /elements /, "SSE response should contain elements:";
+like $basic-patched-elements, /selector /, "SSE response should contain selector:";
 
 done-testing;
