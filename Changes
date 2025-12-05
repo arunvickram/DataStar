@@ -1,6 +1,8 @@
 Revision history for DataStar
 
 {{$NEXT}}
+
+0.0.5  2025-12-04T23:17:33-05:00
     - Created datastar{} block and set that as the default
     - Fixed the functions to remove ':' for sub-events.
 
