@@ -115,9 +115,9 @@ multi execute-script(Str $script, Bool :$auto-remove, Positional :$attributes, S
         |$attributes if $attributes
     ];
 
-    my $attrs-str = @attrs.join(' ');
+    my $attrs = @attrs ?? ' ' ~ @attrs.join(' ') !! '';
 
-    my $script-tag = "<script $attrs-str>" ~ $script ~ "</script>";
+    my $script-tag = "<script$attrs>" ~ $script ~ "</script>";
 
     patch-elements $script-tag, :selector<body>, :mode(ElementPatchMode::APPEND), :$event-id, :$retry-duration
 }
