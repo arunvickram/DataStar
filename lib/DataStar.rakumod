@@ -85,7 +85,6 @@ multi patch-elements(Str $elements, Str :$selector, ElementPatchMode :$mode, Boo
     $*response-generator.send: EventType::PatchElements, @data-lines, :$event-id, :$retry-duration;
 }
 
-#
 multi patch-signals(Str $signals, Str :$event-id, Bool :$only-if-missing, Int :$retry-duration) is export {
     fail 'You can only call this method inside a datastar { } block' unless $*INSIDE-DATASTAR-RESPONSE-GENERATOR;
 
